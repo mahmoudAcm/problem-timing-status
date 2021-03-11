@@ -1,42 +1,40 @@
-import React, { useState, createRef, useEffect, useRef } from 'react';
-import { TimerService } from './timer.service';
-import { TimerProps } from './interfaces';
-import './styles/timer-toggle-button.component.css';
+import React, { useState } from 'react';
+import { formatTime } from '../../common/utils';
+import { TimerState } from './timer-state.interface';
+import styles from './timer.module.css';
 
-export function TimerComponent({ startWith, name, code }: TimerProps) {
-  const timerText = useRef<HTMLHeadingElement>(createRef<any>().current);
-  const [timer, setTimer] = useState<TimerService>();
-
-  useEffect(() => {
-    setTimer(new TimerService(timerText.current!, startWith));
-  }, [startWith]);
-
-  useEffect(() => {
-    setInterval(() => {
-      if (!timer) return;
-      const data = JSON.parse(localStorage.getItem(code)!);
-      data[name] = timer.getTime();
-      localStorage.setItem(code, JSON.stringify(data));
-    }, 500);
-  }, [code, timer, name]);
+export function Timer({ time, started, name, code }: TimerState) {
+  const [isStarted, setIsStarted] = useState(started);
+  const [curTime, setCurTime] = useState(time);
+  const [interval, initInteraval] = useState<NodeJS.Timeout>();
 
   return (
-    <div>
+    <div className={styles.timer}>
       <h3>{name}</h3>
-      <h2 ref={timerText}>{timer?.formatTime(startWith)}</h2>
+      <h2>{formatTime(curTime)}</h2>
       <button
-        className="toggle-btn"
-        onClick={function toggleTimer({ target }: any) {
-          if ((target as HTMLElement).textContent === 'start') {
-            target.innerText = 'stop';
-            timer?.start();
+        className={styles['timer-toggle-btn']}
+        onClick={function toggleTimer() {
+          if (isStarted) {
+            setIsStarted(false);
+            clearInterval(interval!);
           } else {
-            target.innerText = 'start';
-            timer?.stop();
+            setIsStarted(true);
+            initInteraval(
+              setInterval(() => {
+                setCurTime((time) => {
+                  time++;
+                  const storage = JSON.parse(localStorage.getItem(code)!);
+                  storage['timers'][name] = time;
+                  localStorage.setItem(code, JSON.stringify(storage));
+                  return time;
+                });
+              }, 1000),
+            );
           }
         }}
       >
-        start
+        {isStarted ? 'stop' : 'start'}
       </button>
     </div>
   );

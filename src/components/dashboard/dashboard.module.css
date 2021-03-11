@@ -1,0 +1,26 @@
+.app {
+  text-align: center;
+}
+
+.controller {
+  width: 100%;
+}
+
+.controller input {
+  width: 200px;
+  outline: none;
+  padding: 6px;
+}
+
+.add-problem-btn,
+.remove-problem-btn {
+  width: 150px;
+  text-transform: capitalize;
+  cursor: pointer;
+  margin: 32px 8px;
+  padding: 8px;
+  background-color: darkslategrey;
+  color: white;
+  border: none;
+  outline: none;
+}
