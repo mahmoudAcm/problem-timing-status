@@ -1,4 +1,14 @@
 /**
+ * retunrs the current time in seconds
+ */
+export function getTime() {
+  const today = new Date();
+  return (
+    today.getHours() * (60 * 60) + today.getMinutes() * 60 + today.getSeconds()
+  );
+}
+
+/**
  * returns the time in format of `hh:mm:ss`
  * @param { number } time time in seconds
  */
