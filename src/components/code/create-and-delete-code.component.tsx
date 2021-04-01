@@ -44,6 +44,10 @@ export function CreateAndDeleteCode() {
     if (message) return;
 
     context.setProblemCodeList((list: Array<string>) => {
+      if (list.includes(newCode)) {
+        setHelperText('this code is already created');
+        return list;
+      }
       const newArray = list.concat(newCode);
       saveData('problemCodeList', newArray);
       saveData(newCode, {
@@ -54,9 +58,9 @@ export function CreateAndDeleteCode() {
           debugging: 0,
         },
       });
+      setNewCode('');
       return newArray;
     });
-    setNewCode('');
   }
 
   function handleRemove() {
@@ -66,19 +70,23 @@ export function CreateAndDeleteCode() {
     if (message) return;
 
     context.setProblemCodeList((list: Array<string>) => {
+      if (!list.includes(newCode)) {
+        setHelperText('this code is not found');
+        return list;
+      }
       const newArray = list.filter((value) => value !== newCode);
       saveData('problemCodeList', newArray);
       saveData('code', null);
       localStorage.removeItem(newCode);
+      context.setCode('');
+      setNewCode('');
       return newArray;
     });
-    context.setCode('');
-    setNewCode('');
   }
 
   return (
     <Grid container alignItems="center" direction="column" spacing={3}>
-      <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+      <Grid item>
         <TextField
           required
           label="Create And Delete Code"
