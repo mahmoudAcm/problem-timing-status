@@ -1,9 +1,0 @@
-.timer-list {
-  padding: 50px auto;
-  margin-bottom: 100px;
-}
-
-.timers {
-  display: flex;
-  justify-content: space-evenly;
-}

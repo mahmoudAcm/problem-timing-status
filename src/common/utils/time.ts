@@ -2,10 +2,7 @@
  * retunrs the current time in seconds
  */
 export function getTime() {
-  const today = new Date();
-  return (
-    today.getHours() * (60 * 60) + today.getMinutes() * 60 + today.getSeconds()
-  );
+  return Math.round(Date.now() / 1000);
 }
 
 /**

@@ -1,11 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+
 import './index.css';
-import { Dashboard } from './components';
+import { StateProvider, Timer } from './components';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Dashboard />
+    <StateProvider>
+      <Timer />
+    </StateProvider>
   </React.StrictMode>,
   document.getElementById('root'),
 );
