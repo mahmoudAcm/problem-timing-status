@@ -6,6 +6,8 @@ import React, {
   useState,
 } from 'react';
 import { Button, Typography } from '@material-ui/core';
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import PauseIcon from '@material-ui/icons/Pause';
 
 import { useStyles } from './timer.module';
 import { loadData, saveData, formatTime, useMyState } from '../../common';
@@ -71,16 +73,16 @@ export function TimerController() {
 
   return (
     <div className={classes.center}>
-      <Typography variant="h1">
+      <Typography variant="h3">
         {formatTime(Math.round((curTime + totalTime) / 1000))}
       </Typography>
       <Button
-        variant="contained"
-        color="primary"
+        variant="outlined"
+        color="secondary"
         className={classes.timerBtn}
         onClick={handleClick}
       >
-        {isStarted ? 'stop' : 'start'}
+        {isStarted ? <PauseIcon /> : <PlayArrowIcon />}
       </Button>
     </div>
   );

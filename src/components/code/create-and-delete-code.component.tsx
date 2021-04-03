@@ -1,12 +1,14 @@
 import React, { useContext, useState } from 'react';
 import { Button, TextField, Grid } from '@material-ui/core';
 
+import { useStyles } from './code.module';
 import { StateContext } from '../state.context';
 import { saveData } from '../../common';
 
-const codeRegx = /^CF[1-9]\d*-D[1-4]-[A-E]$/;
+const codeRegx = /^[1-9]\d*[A-E]$/;
 
 export function CreateAndDeleteCode() {
+  const classes = useStyles();
   const context = useContext(StateContext);
   const [helperText, setHelperText] = useState('');
   const [newCode, setNewCode] = useState('');
@@ -86,16 +88,16 @@ export function CreateAndDeleteCode() {
 
   return (
     <Grid container alignItems="center" direction="column" spacing={3}>
-      <Grid item>
+      <Grid item className={classes.createAndDeleteInput}>
         <TextField
           required
           label="Create And Delete Code"
-          placeholder="code i.e CF101-D2-A"
+          placeholder="example 101A"
           value={newCode}
           onChange={handleChange}
           helperText={helperText}
           variant="outlined"
-          color="secondary"
+          color="primary"
           InputLabelProps={{
             shrink: true,
           }}
@@ -109,7 +111,7 @@ export function CreateAndDeleteCode() {
         </Grid>
         <Grid item>
           <Button variant="contained" color="secondary" onClick={handleRemove}>
-            remove
+            delete
           </Button>
         </Grid>
       </Grid>

@@ -1,12 +1,5 @@
 import React, { useContext } from 'react';
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  IconButton,
-  Typography,
-} from '@material-ui/core';
-import SpeakerNotesOutlinedIcon from '@material-ui/icons/SpeakerNotesOutlined';
+import { Card, CardContent, Typography } from '@material-ui/core';
 
 import { useStyles } from './timer.module';
 import { Summary } from './summary.component';
@@ -19,31 +12,10 @@ export function Timer() {
   const context = useContext(StateContext);
   const classes = useStyles();
 
-  function handleSummaryClick() {
-    context.setIsOpen(false);
-    setTimeout(() => {
-      context.setIsOpen(true);
-    }, 200);
-  }
-
   return (
     <>
       <Summary />
       <Card className={classes.timer} elevation={5}>
-        <CardHeader
-          title="Problem Status"
-          subheader="Timer"
-          action={
-            <IconButton
-              aria-label="summary"
-              color="primary"
-              title="get a summary"
-              onClick={handleSummaryClick}
-            >
-              <SpeakerNotesOutlinedIcon />
-            </IconButton>
-          }
-        />
         <CardContent>
           <div className={classes.center}>
             <Code />

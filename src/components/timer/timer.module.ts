@@ -7,6 +7,12 @@ export const useStyles = makeStyles({
     top: '50%',
     transform: 'translate(-50%, -50%)',
   },
+  summaryButton: {
+    // color: "black"
+    position: 'fixed',
+    bottom: 25,
+    right: 25,
+  },
   center: {
     display: 'flex',
     flexDirection: 'column',
@@ -17,7 +23,6 @@ export const useStyles = makeStyles({
     margin: '20px auto',
   },
   timerBtn: {
-    width: 150,
     marginTop: 20,
   },
 });
