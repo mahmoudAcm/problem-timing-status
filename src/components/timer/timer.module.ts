@@ -8,7 +8,7 @@ export const useStyles = makeStyles({
     transform: 'translate(-50%, -50%)',
   },
   summaryButton: {
-    // color: "black"
+    color: 'white',
     position: 'fixed',
     bottom: 25,
     right: 25,

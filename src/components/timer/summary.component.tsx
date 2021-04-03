@@ -46,16 +46,17 @@ export function Summary() {
   }
 
   return (
-    <div>
-      <Fab
-        color="primary"
-        className={classes.summaryButton}
-        aria-label="report"
-        title="get a summary"
-        onClick={handleSummaryClick}
-      >
-        <ReportOutlinedIcon color="action" />
-      </Fab>
+    <>
+      <div className={classes.summaryButton}>
+        <Fab
+          color="primary"
+          aria-label="report"
+          title="get a summary"
+          onClick={handleSummaryClick}
+        >
+          <ReportOutlinedIcon />
+        </Fab>
+      </div>
       <Snackbar
         anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
         open={context.isOpen && !!context.code}
@@ -83,6 +84,6 @@ export function Summary() {
           }
         />
       </Snackbar>
-    </div>
+    </>
   );
 }
