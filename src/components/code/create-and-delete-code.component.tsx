@@ -1,25 +1,13 @@
 import React, { useContext, useState } from 'react';
 import { Button, TextField, Grid } from '@material-ui/core';
 
-import { useStyles } from './code.module';
 import { StateContext } from '../state.context';
 import { saveData } from '../../common';
 
-const codeRegx = /^[1-9]\d*[A-E]$/;
-
 export function CreateAndDeleteCode() {
-  const classes = useStyles();
   const context = useContext(StateContext);
   const [helperText, setHelperText] = useState('');
   const [newCode, setNewCode] = useState('');
-
-  function validateCode(code: string) {
-    if (!code.match(codeRegx)) {
-      return 'please provide a valid code';
-    } else {
-      return '';
-    }
-  }
 
   function handleChange({ target }: React.ChangeEvent<{ value: unknown }>) {
     const code = target.value as string;
@@ -29,9 +17,6 @@ export function CreateAndDeleteCode() {
       setHelperText('');
       return;
     }
-
-    const message = validateCode(code);
-    setHelperText(message);
   }
 
   function handleClick() {
@@ -39,11 +24,6 @@ export function CreateAndDeleteCode() {
       setHelperText('please fill field');
       return;
     }
-
-    const message = validateCode(newCode);
-    setHelperText(message);
-
-    if (message) return;
 
     context.setProblemCodeList((list: Array<string>) => {
       if (list.includes(newCode)) {
@@ -66,11 +46,6 @@ export function CreateAndDeleteCode() {
   }
 
   function handleRemove() {
-    const message = validateCode(newCode);
-    setHelperText(message);
-
-    if (message) return;
-
     context.setProblemCodeList((list: Array<string>) => {
       if (!list.includes(newCode)) {
         setHelperText('this code is not found');
@@ -88,11 +63,11 @@ export function CreateAndDeleteCode() {
 
   return (
     <Grid container alignItems="center" direction="column" spacing={3}>
-      <Grid item className={classes.createAndDeleteInput}>
+      <Grid item>
         <TextField
           required
           label="Create And Delete Code"
-          placeholder="example 101A"
+          placeholder="type the code"
           value={newCode}
           onChange={handleChange}
           helperText={helperText}

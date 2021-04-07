@@ -1,10 +1,8 @@
 import React, { useContext, useMemo } from 'react';
-import { Fab, Snackbar, SnackbarContent, Slide, Grid } from '@material-ui/core';
+import { Snackbar, SnackbarContent, Slide, Grid } from '@material-ui/core';
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 import { TransitionProps } from '@material-ui/core/transitions';
-import ReportOutlinedIcon from '@material-ui/icons/ReportOutlined';
 
-import { useStyles } from './timer.module';
 import { StateContext } from '../state.context';
 import { formatTime, loadData } from '../../common';
 
@@ -18,7 +16,6 @@ function SlideTransition(props: TransitionProps) {
 
 export function Summary() {
   const context = useContext(StateContext);
-  const classes = useStyles();
   const { keys, timers, totalTime } = useMemo(() => {
     const keys = ['reading', 'thinking', 'coding', 'debugging'];
 
@@ -34,29 +31,26 @@ export function Summary() {
     };
   }, [context.code, context.isOpen]);
 
-  function handleSummaryClick() {
-    context.setIsOpen(false);
-    setTimeout(() => {
-      context.setIsOpen(true);
-    }, 200);
-  }
-
   function handleClose() {
     context.setIsOpen(false);
   }
 
+  function mapStatusToComponent(timers: any) {
+    return function (status: string) {
+      return (
+        <Grid item key={status}>
+          <Alert severity="info" onClose={handleClose}>
+            {`${status}: ${formatTime(
+              Math.round((timers[status] || 0) / 1000),
+            )}`}
+          </Alert>
+        </Grid>
+      );
+    };
+  }
+
   return (
     <>
-      <div className={classes.summaryButton}>
-        <Fab
-          color="primary"
-          aria-label="report"
-          title="get a summary"
-          onClick={handleSummaryClick}
-        >
-          <ReportOutlinedIcon />
-        </Fab>
-      </div>
       <Snackbar
         anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
         open={context.isOpen && !!context.code}
@@ -67,14 +61,7 @@ export function Summary() {
           style={{ background: 'none' }}
           message={
             <Grid container direction="column" spacing={1}>
-              {keys.map((status) => (
-                <Grid item>
-                  <Alert severity="info" onClose={handleClose} key={status}>
-                    {status}:
-                    {formatTime(Math.round((timers[status] || 0) / 1000))}
-                  </Alert>
-                </Grid>
-              ))}
+              {keys.map(mapStatusToComponent(timers))}
               <Grid item>
                 <Alert severity="info">
                   total time: {formatTime(Math.round(totalTime / 1000))}

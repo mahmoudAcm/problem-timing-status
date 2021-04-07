@@ -23,7 +23,12 @@ export function SelectCode() {
       options={context.problemCodeList as Array<string>}
       getOptionLabel={(option) => option}
       renderInput={(params) => (
-        <TextField {...params} label="Code" variant="outlined" />
+        <TextField
+          {...params}
+          label="Select A Code To Start"
+          variant="outlined"
+          placeholder="search for the code"
+        />
       )}
       onChange={handleChange}
       value={context.code}

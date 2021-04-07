@@ -7,12 +7,6 @@ export const useStyles = makeStyles({
     top: '50%',
     transform: 'translate(-50%, -50%)',
   },
-  summaryButton: {
-    color: 'white',
-    position: 'fixed',
-    bottom: 25,
-    right: 25,
-  },
   center: {
     display: 'flex',
     flexDirection: 'column',
@@ -21,6 +15,20 @@ export const useStyles = makeStyles({
   status_select: {
     width: 110,
     margin: '20px auto',
+  },
+  selectCodeMessage: {
+    maringTop: 20,
+  },
+  tabPanel: (value) => ({
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
+    marginTop: value === 1 ? 20 : 40,
+  }),
+  discoverMoreText: {
+    width: '100%',
+    display: 'block',
   },
   timerBtn: {
     marginTop: 20,
