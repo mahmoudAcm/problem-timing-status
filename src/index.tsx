@@ -2,13 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import './index.css';
-import { StateProvider, Timer } from './components';
+import { ContextProvider } from './context';
+import { App } from './components';
 
 ReactDOM.render(
   <React.StrictMode>
-    <StateProvider>
-      <Timer />
-    </StateProvider>
+    <ContextProvider>
+      <App />
+    </ContextProvider>
   </React.StrictMode>,
   document.getElementById('root'),
 );
