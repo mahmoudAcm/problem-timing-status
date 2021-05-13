@@ -7,6 +7,7 @@ import {
   StepLabel,
   StepContent,
   useTheme,
+  Grid,
 } from '@material-ui/core';
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 
@@ -16,8 +17,6 @@ import { SelectProblemCode } from '../select-code';
 import { Timer } from '../timer';
 import { SelectStatus } from '../status';
 import { Summary } from '../summary';
-import { CodeDialog } from '../code-dialog';
-import { OpenIconSpeedDial } from '../speed-dial';
 
 function StepAction(props: any) {
   const theme = useTheme();
@@ -37,8 +36,7 @@ function StepAction(props: any) {
     if (!completedList[activeStep] && activeStep !== 2) {
       dispatch({
         type: 'SET_ERROR_MESSAGE',
-        errorMessage:
-          'Please select a problem code so you can go to the next step',
+        errorMessage: 'Please select a problem so you can go to the next step',
       });
       return;
     }
@@ -110,7 +108,11 @@ export function StepperComponent() {
     dispatch,
   } = useContext(Context);
 
-  function handleClose() {
+  function handleClose(_: any, reason?: string) {
+    if (reason === 'clickaway') {
+      return;
+    }
+
     dispatch({
       type: 'CLOSE_ERROR_MESSAGE',
     });
@@ -119,8 +121,10 @@ export function StepperComponent() {
   return (
     <>
       <Snackbar
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
         open={open}
+        autoHideDuration={errorMessage.length * 100}
+        onClose={handleClose}
       >
         <Alert severity="info" onClose={handleClose}>
           {errorMessage}
@@ -129,31 +133,34 @@ export function StepperComponent() {
       <Stepper
         activeStep={activeStep}
         orientation="vertical"
+        elevation={4}
         style={{
-          width: 1000,
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
+          width: 950,
+          marginLeft: '50%',
+          transform: 'translateX(-50%)',
+          marginTop: theme.spacing(1.5) + '%',
         }}
       >
         <Step key="1">
-          <StepLabel>Select a problem code</StepLabel>
+          <StepLabel>Choose A Problem To Start</StepLabel>
           <StepContent>
-            <SelectProblemCode />
-            <StepAction
-              style={{
-                width: 250,
-                display: 'flex',
-                justifyContent: 'center',
-                marginLeft: -17,
-                marginTop: theme.spacing(2),
-              }}
-            />
+            <Grid
+              container
+              direction="column"
+              alignItems="center"
+              style={{ marginTop: theme.spacing(2) }}
+            >
+              <Grid item>
+                <SelectProblemCode />
+              </Grid>
+              <Grid item>
+                <StepAction style={{ marginTop: theme.spacing(2) }} />
+              </Grid>
+            </Grid>
           </StepContent>
         </Step>
         <Step key="2">
-          <StepLabel>Select status</StepLabel>
+          <StepLabel>Select Status</StepLabel>
           <StepContent>
             <SelectStatus />
             <StepAction
@@ -165,7 +172,7 @@ export function StepperComponent() {
           </StepContent>
         </Step>
         <Step key="3">
-          <StepLabel>Start timing</StepLabel>
+          <StepLabel>Start Timing</StepLabel>
           <StepContent>
             <Timer />
             <StepAction
@@ -177,7 +184,7 @@ export function StepperComponent() {
           </StepContent>
         </Step>
         <Step key="4">
-          <StepLabel>Create a summary</StepLabel>
+          <StepLabel>Create A Summary</StepLabel>
           <StepContent>
             <Summary timers={timers} />
             <StepAction
@@ -189,8 +196,6 @@ export function StepperComponent() {
           </StepContent>
         </Step>
       </Stepper>
-      <CodeDialog />
-      <OpenIconSpeedDial />
     </>
   );
 }

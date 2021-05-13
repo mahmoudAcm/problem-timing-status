@@ -35,12 +35,12 @@ export function SelectProblemCode() {
         id="combo-box-demo"
         options={problemCodeList as Array<string>}
         getOptionLabel={(option) => option}
-        style={{ width: 250, height: 64.34, marginLeft: 8, marginTop: 8 }}
+        style={{ width: 450, height: 64.34, marginLeft: 8, marginTop: 8 }}
         renderInput={(params) => (
           <TextField
             {...params}
-            label="Problem code"
-            placeholder="type to search"
+            label="Problems Links"
+            placeholder="type to search..."
             variant="outlined"
           />
         )}

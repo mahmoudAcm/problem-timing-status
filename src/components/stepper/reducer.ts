@@ -2,6 +2,7 @@ import { loadData } from '../../common';
 
 export const initialStepper = {
   activeStep: loadData('activeStep') || 0,
+  errorMessage: '',
 };
 
 export function StepperReducer(

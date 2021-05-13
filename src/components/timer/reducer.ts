@@ -39,6 +39,13 @@ export function TimerReducer(
         ...state,
         timer: Date.now() - state.startedAt,
       };
+    case 'RESET_TIMER_STATE':
+      return {
+        ...state,
+        isStarted: false,
+        startedAt: 0,
+        timer: 0,
+      };
     default:
       return state;
   }

@@ -23,7 +23,7 @@ export function Summary({ timers }: any) {
   return (
     <Timeline align="alternate">
       {statusKeys.concat('Total').map((status) => (
-        <TimelineItem>
+        <TimelineItem key={status}>
           <TimelineOppositeContent>
             <Typography
               color="textSecondary"

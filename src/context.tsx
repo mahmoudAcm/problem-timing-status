@@ -2,34 +2,34 @@ import React, { createContext, useReducer } from 'react';
 import { combineReducers } from '@reduxjs/toolkit';
 
 import {
+  HeaderReducer,
   StepperReducer,
   StatusReducer,
   SelectCodeReducer,
   TimerReducer,
-  CodeDialogReducer,
+  initialHeader,
   initialStepper,
   initialSelectCode,
   initialStatus,
   initialTimer,
-  initialCodeDialog,
 } from './components';
 
 const initialState = {
+  HeaderReducer: initialHeader,
   StepperReducer: initialStepper,
   SelectCodeReducer: initialSelectCode,
   StatusReducer: initialStatus,
   TimerReducer: initialTimer,
-  CodeDialogReducer: initialCodeDialog,
 };
 
 export const Context = createContext<any>(initialState);
 
 const reducer: any = combineReducers({
+  HeaderReducer,
   StepperReducer,
   SelectCodeReducer,
   StatusReducer,
   TimerReducer,
-  CodeDialogReducer,
 });
 
 export function ContextProvider({ children }: any) {
