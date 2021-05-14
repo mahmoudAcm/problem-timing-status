@@ -6,6 +6,7 @@ export function loadData(key: string) {
 
 export function saveData<T = any>(key: string, storage: T) {
   localStorage.setItem(key, JSON.stringify(storage));
+  return storage;
 }
 
 export function useLocalStorage(
