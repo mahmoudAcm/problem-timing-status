@@ -14,7 +14,8 @@ import { formatTime } from '../../common';
 
 const statusKeys = ['Reading', 'Thinking', 'Coding', 'Debugging'];
 
-export function Summary({ timers }: any) {
+export function Summary(props: any) {
+  const timers = { ...props.timers };
   const sum = statusKeys.reduce(
     (sum, status) => sum + timers[status.toLowerCase()],
     0,

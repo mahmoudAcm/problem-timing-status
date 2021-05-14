@@ -1,8 +1,8 @@
-import { loadData } from '../../common';
+import { loadData, saveData } from '../../common';
 
 export const initialSelectCode = {
-  problemCodeList: loadData('problemCodeList') || [],
-  code: loadData('code') || '',
+  problemCodeList: loadData('problemCodeList') || saveData('problemCodeList', []),
+  code: loadData('code') || saveData('code', ''),
 };
 
 export function SelectCodeReducer(

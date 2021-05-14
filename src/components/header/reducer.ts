@@ -1,7 +1,7 @@
-import { loadData } from '../../common';
+import { loadData, saveData } from '../../common';
 
 export const initialHeader = {
-  activeTab: loadData('activeTab') || 0,
+  activeTab: loadData('activeTab') || saveData('activeTab', 0),
 };
 
 export function HeaderReducer(state = initialHeader, { type, activeTab }: any) {

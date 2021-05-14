@@ -1,7 +1,7 @@
-import { loadData } from '../../common';
+import { loadData, saveData } from '../../common';
 
 export const initialStepper = {
-  activeStep: loadData('activeStep') || 0,
+  activeStep: loadData('activeStep') || saveData('activeStep', 0),
   errorMessage: '',
 };
 

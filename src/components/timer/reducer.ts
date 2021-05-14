@@ -1,4 +1,4 @@
-import { loadData } from '../../common';
+import { loadData, saveData } from '../../common';
 
 const code = loadData('code');
 const status = loadData('status');
@@ -7,7 +7,7 @@ const timers = loadData(code) ? loadData(code).timers : {};
 export const initialTimer: any = {
   timers,
   curTime: timers[status],
-  isStarted: loadData('isStarted'),
+  isStarted: loadData('isStarted') || saveData('isStarted', false),
   startedAt: loadData('startedAt'),
   timer: 0,
 };

@@ -1,8 +1,7 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { Container, Typography, useTheme } from '@material-ui/core';
 
 import { Context } from '../context';
-import { saveData } from '../common';
 import { StepperComponent } from './stepper';
 import { Header } from './header';
 import { ProblemsLinksList } from './problems-links';
@@ -21,15 +20,6 @@ function Tabs({ tab }: any) {
   }
 }
 
-const map = (function createMap(item) {
-  item.set('problemCodeList', []);
-  item.set('status', 'reading');
-  item.set('code', '');
-  item.set('activeStep', 0);
-  item.set('activeTab', 0);
-  return item;
-})(new Map());
-
 export function App() {
   const theme = useTheme();
   const {
@@ -37,14 +27,6 @@ export function App() {
       HeaderReducer: { activeTab },
     },
   } = useContext(Context);
-
-  useEffect(() => {
-    map.forEach((value, key) => {
-      if (!localStorage.getItem(key)) {
-        saveData(key, value);
-      }
-    });
-  }, []);
 
   return (
     <>

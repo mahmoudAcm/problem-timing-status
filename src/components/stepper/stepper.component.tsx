@@ -36,7 +36,9 @@ function StepAction(props: any) {
     if (!completedList[activeStep] && activeStep !== 2) {
       dispatch({
         type: 'SET_ERROR_MESSAGE',
-        errorMessage: 'Please select a problem so you can go to the next step',
+        errorMessage: `Please select a ${
+          !activeStep ? 'problem' : 'status'
+        } so you can go to the next step`,
       });
       return;
     }
