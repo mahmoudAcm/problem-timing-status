@@ -20,6 +20,17 @@ function Tabs({ tab }: any) {
   }
 }
 
+(function isScreenWidthMoreThan1079Pixels() {
+  ['load', 'resize'].forEach((eventType) =>
+    window.addEventListener(eventType, () => {
+      if(window.innerWidth < 1080) {
+        alert('Please Open This App With A Screen Width More Than 1079 pixels');
+        document.write('');
+      }
+    }),
+  );
+})();
+
 export function App() {
   const theme = useTheme();
   const {
