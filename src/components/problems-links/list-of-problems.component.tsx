@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useTheme } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
@@ -28,6 +28,10 @@ export function ListOfProblems() {
     dispatch,
   } = useContext(Context);
 
+  useEffect(() => {
+    setPage(1);
+  }, [problemCodeList]);
+
   const handleChange = (_: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
   };
@@ -47,6 +51,11 @@ export function ListOfProblems() {
         });
 
         dispatch({
+          type: 'STATUS_CHANAGE',
+          status: '',
+        });
+
+        dispatch({
           type: 'HANDLE_BACK',
           activeStep: 0,
         });
@@ -56,6 +65,7 @@ export function ListOfProblems() {
         });
 
         saveData('code', '');
+        saveData('status', '');
         saveData('activeStep', 0);
         saveData('startedAt', 0);
         saveData('isStarted', false);

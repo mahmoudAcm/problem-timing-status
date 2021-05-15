@@ -1,6 +1,8 @@
 import { loadData, saveData } from '../../common';
 
-export const initialStatus = { status: loadData('status') || saveData('status', '') };
+export const initialStatus = {
+  status: loadData('status') || saveData('status', ''),
+};
 
 export function StatusReducer(state = initialStatus, { type, status }: any) {
   switch (type) {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -6,13 +6,12 @@ import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import RefreshIcon from '@material-ui/icons/Refresh';
-import SearchIcon from '@material-ui/icons/Search';
 
 import { Context } from '../../context';
 import { saveData, loadData } from '../../common';
 import { linkRegx } from './const';
 import { ListOfProblems } from './list-of-problems.component';
+import { restoreSearch, isSubSequance, toCamelCase } from './helpers';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -36,20 +35,34 @@ export function Form() {
   const [searchKey, setSearchKey] = React.useState('');
   const [helperText, setHelperText] = React.useState('');
 
-  const {
-    state: {
-      SelectCodeReducer: { problemCodeList },
-    },
-    dispatch,
-  } = React.useContext(Context);
+  const { dispatch } = React.useContext(Context);
+
+  //restore all the data back when rendering and when unmounting
+  useEffect(() => {
+    restoreSearch(dispatch)();
+    return restoreSearch(dispatch);
+  }, [dispatch]);
 
   function handleTyping({ target: { value } }: any) {
     setLink(value);
     setHelperText('');
   }
 
-  function handleFilter({ target: { value } }: any) {
-    setSearchKey(value);
+  function handleFilter({ target: { value: searchKey } }: any) {
+    setSearchKey(searchKey);
+    const data: string[] = loadData('problemCodeList');
+    if (!searchKey) {
+      dispatch({
+        type: 'SET_PROBLEM_CODE',
+        problemCodeList: data,
+      });
+      return;
+    }
+
+    dispatch({
+      type: 'SET_PROBLEM_CODE',
+      problemCodeList: data.filter(isSubSequance(searchKey)),
+    });
   }
 
   function handleAdd() {
@@ -57,6 +70,13 @@ export function Form() {
       setHelperText('please fill the field');
       return;
     }
+
+    if (link.length > 300) {
+      setHelperText("the link shouldn't be more than 300 character long");
+      return;
+    }
+
+    const problemCodeList = loadData('problemCodeList');
 
     let newProblemCodeList;
     if (problemCodeList.includes(link)) {
@@ -73,7 +93,7 @@ export function Form() {
 
     dispatch({
       type: 'SET_PROBLEM_CODE',
-      problemCodeList: newProblemCodeList,
+      problemCodeList: newProblemCodeList.filter(isSubSequance(searchKey)),
     });
 
     const storage = {
@@ -89,28 +109,6 @@ export function Form() {
     saveData('problemCodeList', newProblemCodeList);
     setLink('');
     setHelperText('');
-  }
-
-  function handleSearch() {
-    const data: string[] = loadData('problemCodeList');
-    if (!searchKey) {
-      dispatch({
-        type: 'SET_PROBLEM_CODE',
-        problemCodeList: data,
-      });
-      return;
-    }
-
-    dispatch({
-      type: 'SET_PROBLEM_CODE',
-      problemCodeList: data.filter(function isSubSequance(code) {
-        let idx = 0;
-        for (let i = 0; i < code.length; i++) {
-          if (idx < searchKey.length && searchKey[idx] === code[i]) idx++;
-        }
-        return idx === searchKey.length;
-      }),
-    });
   }
 
   function handleReset() {
@@ -137,14 +135,7 @@ export function Form() {
             className={classes.textField}
             value={link}
             onChange={handleTyping}
-            helperText={helperText
-              .split(' ')
-              .map((string) =>
-                string
-                  ? string.charAt(0).toUpperCase() + string.slice(1)
-                  : string,
-              )
-              .join(' ')}
+            helperText={toCamelCase(helperText)}
             error={!!helperText.length}
           />
           <Button
@@ -164,21 +155,14 @@ export function Form() {
               value={searchKey}
               onChange={handleFilter}
             />
-            <Grid item className={classes.btn}>
+            <Grid item>
               <Button
                 variant="contained"
                 color="primary"
                 onClick={handleReset}
-                style={{ marginRight: 16 }}
+                className={classes.btn}
               >
-                <RefreshIcon />
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleSearch}
-              >
-                <SearchIcon />
+                Reset Search
               </Button>
             </Grid>
           </Grid>

@@ -13,15 +13,15 @@ export function Timer() {
     state: {
       StatusReducer: { status },
       SelectCodeReducer: { code },
-      TimerReducer: { timers, curTime, timer, isStarted },
+      TimerReducer: { timers, initialTime, curTime, isStarted },
     },
     dispatch,
   } = useContext(Context);
   const [interval, init] = useState<any>(null);
 
   const [houres, minutes, seconds] = useMemo(
-    () => formatTime(Math.round((curTime + timer) / 1000)).split(':'),
-    [curTime, timer],
+    () => formatTime(Math.round((initialTime + curTime) / 1000)).split(':'),
+    [initialTime, curTime],
   );
 
   useEffect(() => {
@@ -34,11 +34,15 @@ export function Timer() {
         }, 1000),
       );
     }
+    return () => {
+      if (interval !== null) clearInterval(interval);
+    };
   }, [isStarted, dispatch, interval]);
 
   function handleClick() {
     const startedAt = Date.now();
     if (!isStarted) {
+      if (interval !== null) clearInterval(interval);
       saveData('startedAt', startedAt);
       init(
         setInterval(() => {
@@ -52,11 +56,12 @@ export function Timer() {
 
       dispatch({
         type: 'SET_TIMER',
-        curTime: curTime + timer,
+        initialTime: initialTime + curTime,
       });
 
-      timers[status] = curTime + timer;
+      timers[status] = initialTime + curTime;
       saveData(code, { timers });
+      saveData('startedAt', 0);
     }
 
     saveData('isStarted', !isStarted);

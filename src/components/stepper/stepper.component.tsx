@@ -120,6 +120,13 @@ export function StepperComponent() {
     });
   }
 
+  function createNewProblem() {
+    dispatch({
+      type: 'SET_ACTIVE_TAB',
+      activeTab: 1,
+    });
+  }
+
   return (
     <>
       <Snackbar
@@ -156,9 +163,22 @@ export function StepperComponent() {
                 <SelectProblemCode />
               </Grid>
               <Grid item>
-                <StepAction style={{ marginTop: theme.spacing(2) }} />
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  style={{
+                    marginTop: theme.spacing(2),
+                    padding: theme.spacing(1, 3),
+                  }}
+                  onClick={createNewProblem}
+                >
+                  Add new problem
+                </Button>
               </Grid>
             </Grid>
+            <StepAction
+              style={{ marginLeft: -5, marginTop: theme.spacing(1) }}
+            />
           </StepContent>
         </Step>
         <Step key="2">

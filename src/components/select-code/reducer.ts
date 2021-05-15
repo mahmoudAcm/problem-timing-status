@@ -1,7 +1,8 @@
 import { loadData, saveData } from '../../common';
 
 export const initialSelectCode = {
-  problemCodeList: loadData('problemCodeList') || saveData('problemCodeList', []),
+  problemCodeList:
+    loadData('problemCodeList') || saveData('problemCodeList', []),
   code: loadData('code') || saveData('code', ''),
 };
 

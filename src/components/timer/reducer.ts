@@ -6,15 +6,15 @@ const timers = loadData(code) ? loadData(code).timers : {};
 
 export const initialTimer: any = {
   timers,
-  curTime: timers[status],
+  initialTime: timers[status],
   isStarted: loadData('isStarted') || saveData('isStarted', false),
   startedAt: loadData('startedAt'),
-  timer: 0,
+  curTime: 0,
 };
 
 export function TimerReducer(
   state = initialTimer,
-  { type, timers, status, startedAt, curTime }: any,
+  { type, timers, status, startedAt, initialTime }: any,
 ) {
   switch (type) {
     case 'INIT_TIMER':
@@ -25,26 +25,26 @@ export function TimerReducer(
     case 'SET_TIMER':
       return {
         ...state,
-        curTime: curTime || state.timers[status],
+        initialTime: initialTime || state.timers[status],
       };
     case 'TIMER_CLICKED':
       return {
         ...state,
-        timer: 0,
+        curTime: 0,
         isStarted: !state.isStarted,
         startedAt,
       };
     case 'INC_TIMER':
       return {
         ...state,
-        timer: Date.now() - state.startedAt,
+        curTime: Date.now() - state.startedAt,
       };
     case 'RESET_TIMER_STATE':
       return {
         ...state,
         isStarted: false,
         startedAt: 0,
-        timer: 0,
+        curTime: 0,
       };
     default:
       return state;
