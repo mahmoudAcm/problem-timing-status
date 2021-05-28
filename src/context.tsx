@@ -3,12 +3,10 @@ import { combineReducers } from '@reduxjs/toolkit';
 
 import {
   HeaderReducer,
-  StepperReducer,
   StatusReducer,
   SelectCodeReducer,
   TimerReducer,
   initialHeader,
-  initialStepper,
   initialSelectCode,
   initialStatus,
   initialTimer,
@@ -16,7 +14,6 @@ import {
 
 const initialState = {
   HeaderReducer: initialHeader,
-  StepperReducer: initialStepper,
   SelectCodeReducer: initialSelectCode,
   StatusReducer: initialStatus,
   TimerReducer: initialTimer,
@@ -26,7 +23,6 @@ export const Context = createContext<any>(initialState);
 
 const reducer: any = combineReducers({
   HeaderReducer,
-  StepperReducer,
   SelectCodeReducer,
   StatusReducer,
   TimerReducer,

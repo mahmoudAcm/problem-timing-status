@@ -2,28 +2,14 @@ import React, { useContext } from 'react';
 import { Container, Typography, useTheme } from '@material-ui/core';
 
 import { Context } from '../context';
-import { StepperComponent } from './stepper';
 import { Header } from './header';
-import { ProblemsLinksList } from './problems-links';
+import { Home } from './home';
 import { About } from './about';
-
-function Tabs({ tab }: any) {
-  switch (tab) {
-    case 0:
-      return <StepperComponent />;
-    case 1:
-      return <ProblemsLinksList />;
-    case 2:
-      return <About />;
-    default:
-      return <></>;
-  }
-}
 
 (function isScreenWidthMoreThan1079Pixels() {
   ['load', 'resize'].forEach((eventType) =>
     window.addEventListener(eventType, () => {
-      if(window.innerWidth < 1080) {
+      if (window.innerWidth < 1080) {
         alert('Please Open This App With A Screen Width More Than 1079 pixels');
         document.write('');
       }
@@ -42,9 +28,7 @@ export function App() {
   return (
     <>
       <Header />
-      <Container>
-        <Tabs tab={activeTab} />
-      </Container>
+      <Container>{activeTab === 0 ? <Home /> : <About />}</Container>
       <footer
         style={{
           marginTop: theme.spacing(6),

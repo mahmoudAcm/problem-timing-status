@@ -41,24 +41,9 @@ export function About() {
         </Typography>
         <br />
         <Typography align="center">
-          3.So on the home page you have four steps:
+          4. The problem id is its link i.e
+          https://codeforces.com/contest/1480/problem/B.
         </Typography>
-        <br />
-        <Typography align="center">
-          - choose the problem that you want to record your performance for.
-        </Typography>
-        <Typography align="center">
-          - choose your current (column / status).
-        </Typography>
-        <Typography align="center">- start timing.</Typography>
-        <Typography align="center">- get a summary.</Typography>
-        <br />
-        <Typography align="center">
-          4.At first you will have no problems to choose from so go to the
-          problems page and add your problem.
-        </Typography>
-        <br />
-        <Typography align="center">4.1. The problem id is its link.</Typography>
         <br />
         <Typography align="center">
           5.You can check the app code{' '}

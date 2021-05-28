@@ -10,12 +10,12 @@ import {
   TimelineContent,
 } from '@material-ui/lab';
 
-import { formatTime } from '../../common';
+import { formatTime, loadData } from '../../common';
 
 const statusKeys = ['Reading', 'Thinking', 'Coding', 'Debugging'];
 
-export function Summary(props: any) {
-  const timers = { ...props.timers };
+export function Summary({ link }: any) {
+  const { timers } = loadData(link);
   const sum = statusKeys.reduce(
     (sum, status) => sum + timers[status.toLowerCase()],
     0,

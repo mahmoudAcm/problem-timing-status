@@ -1,14 +1,14 @@
-import { loadData, saveData } from '../../common';
+import { saveData, loadData } from '../../common';
 
 export const initialSelectCode = {
   problemCodeList:
     loadData('problemCodeList') || saveData('problemCodeList', []),
-  code: loadData('code') || saveData('code', ''),
+  code: loadData('code') || '',
 };
 
 export function SelectCodeReducer(
   state = initialSelectCode,
-  { type, code, problemCodeList }: any,
+  { type, code, problemCodeList, loading }: any,
 ) {
   switch (type) {
     case 'SELECT_CODE': {
@@ -21,6 +21,12 @@ export function SelectCodeReducer(
       return {
         ...state,
         problemCodeList,
+      };
+    }
+    case 'LOADING': {
+      return {
+        ...state,
+        loading,
       };
     }
     default:

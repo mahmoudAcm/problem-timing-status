@@ -1,7 +1,7 @@
 import { loadData, saveData } from '../../common';
 
 export const initialStatus = {
-  status: loadData('status') || saveData('status', ''),
+  status: loadData('status') || saveData('status', 'reading'),
 };
 
 export function StatusReducer(state = initialStatus, { type, status }: any) {

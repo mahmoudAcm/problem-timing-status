@@ -16,6 +16,9 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       flexGrow: 1,
     },
+    menu: {
+      width: 200,
+    },
     menuButton: {
       marginRight: theme.spacing(2),
     },
@@ -70,6 +73,7 @@ export function Header() {
             </IconButton>
             <Menu
               id="menu-appbar"
+              className={classes.menu}
               anchorEl={anchorEl}
               anchorOrigin={{
                 vertical: 'top',
@@ -84,8 +88,7 @@ export function Header() {
               onClose={handleClose}
             >
               <MenuItem onClick={handleClick(0)}>Home</MenuItem>
-              <MenuItem onClick={handleClick(1)}>Problems</MenuItem>
-              <MenuItem onClick={handleClick(2)}>About</MenuItem>
+              <MenuItem onClick={handleClick(1)}>About</MenuItem>
             </Menu>
           </div>
         </Toolbar>

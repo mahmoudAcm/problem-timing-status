@@ -19,10 +19,9 @@ export function Timer() {
   } = useContext(Context);
   const [interval, init] = useState<any>(null);
 
-  const [houres, minutes, seconds] = useMemo(
-    () => formatTime(Math.round((initialTime + curTime) / 1000)).split(':'),
-    [initialTime, curTime],
-  );
+  const [houres, minutes, seconds] = useMemo(() => {
+    return formatTime(Math.round((initialTime + curTime) / 1000)).split(':');
+  }, [initialTime, curTime]);
 
   useEffect(() => {
     if (isStarted && !interval) {
@@ -93,6 +92,7 @@ export function Timer() {
           color="primary"
           className={classes.btn}
           onClick={handleClick}
+          id="timer-btn"
         >
           {isStarted ? <PauseIcon /> : <PlayArrowIcon />}
         </Button>

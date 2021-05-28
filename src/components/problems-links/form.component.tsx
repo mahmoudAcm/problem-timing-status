@@ -6,23 +6,24 @@ import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import AddIcon from '@material-ui/icons/Add';
+import RestoreIcon from '@material-ui/icons/Restore';
 
 import { Context } from '../../context';
 import { saveData, loadData } from '../../common';
 import { linkRegx } from './const';
-import { ListOfProblems } from './list-of-problems.component';
 import { restoreSearch, isSubSequance, toCamelCase } from './helpers';
+import { ListOfProblems } from './list-of-problems.component';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    width: 900,
-    height: 490,
+    minHeight: 500,
   },
   textField: {
     width: 490,
   },
   btn: {
-    width: theme.spacing(18),
+    width: theme.spacing(10),
     marginLeft: 25,
     marginTop: -5,
     textTransform: 'capitalize',
@@ -127,7 +128,7 @@ export function Form() {
         container
         direction="column"
         alignItems="center"
-        spacing={4}
+        spacing={2}
       >
         <Grid item style={{ height: 67 }}>
           <TextField
@@ -143,29 +144,27 @@ export function Form() {
             className={classes.btn}
             color="primary"
             onClick={handleAdd}
+            title="Add A Problem"
           >
-            Add Problem
+            <AddIcon />
           </Button>
         </Grid>
-        <Grid item style={{ height: 67 }}>
-          <Grid container justify="center">
-            <TextField
-              placeholder="Type Something To Search ..."
-              className={classes.textField}
-              value={searchKey}
-              onChange={handleFilter}
-            />
-            <Grid item>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleReset}
-                className={classes.btn}
-              >
-                Reset Search
-              </Button>
-            </Grid>
-          </Grid>
+        <Grid item>
+          <TextField
+            placeholder="Type Something To Search ..."
+            className={classes.textField}
+            value={searchKey}
+            onChange={handleFilter}
+          />
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleReset}
+            className={classes.btn}
+            title="Reset Search"
+          >
+            <RestoreIcon />
+          </Button>
         </Grid>
         <Grid item>
           <ListOfProblems />

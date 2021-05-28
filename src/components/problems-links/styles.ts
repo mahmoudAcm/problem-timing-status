@@ -4,11 +4,10 @@ export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       width: 850,
-      minHeight: 310,
+      minHeight: 300,
     },
     problems: {
       width: '100%',
-      minHeight: 'auto',
       marginTop: theme.spacing(1.5) + '%',
     },
     form: {},
@@ -25,12 +24,6 @@ export const useStyles = makeStyles((theme: Theme) =>
       marginTop: theme.spacing(14.5),
       textAlign: 'center',
       display: 'block',
-    },
-    pagination: {
-      position: 'absolute',
-      bottom: theme.spacing(3),
-      left: '50%',
-      transform: 'translateX(-50%)',
     },
   }),
 );

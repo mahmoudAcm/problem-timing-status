@@ -13,6 +13,7 @@ export function ProblemsLinksList() {
       direction="column"
       alignItems="center"
       className={classes.problems}
+      spacing={1}
     >
       <Grid item>
         <Form />

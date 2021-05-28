@@ -22,7 +22,6 @@ export function isSubSequance(searchKey: string) {
 export function toCamelCase(str: string) {
   return str
     .split(' ')
-    .map((word) =>
-      word ? word.charAt(0).toUpperCase() + word.slice(1) : word,
-    );
+    .map((word) => (word ? word.charAt(0).toUpperCase() + word.slice(1) : word))
+    .join(' ');
 }
