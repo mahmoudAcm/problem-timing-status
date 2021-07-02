@@ -26,10 +26,19 @@ export function App() {
     <Router>
       <Header />
       <Container>
-        <Route exact path="/" component={Home} />
-        <Route path="/playground" component={Playground} />
-        <Route path="/privacy-policy" component={PrivacyPolicy} />
-        <Route path="/terms-and-conditions" component={TermsAndConditions} />
+        <Route exact path="/problem-timing-status" component={Home} />
+        <Route
+          path="/problem-timing-status/playground"
+          component={Playground}
+        />
+        <Route
+          path="/problem-timing-status/privacy-policy"
+          component={PrivacyPolicy}
+        />
+        <Route
+          path="/problem-timing-status/terms-and-conditions"
+          component={TermsAndConditions}
+        />
       </Container>
       <footer
         style={{

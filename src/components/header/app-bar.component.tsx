@@ -73,10 +73,18 @@ export function Header() {
               open={open}
               onClose={handleClose}
             >
-              <MenuItem component={Link} to="/" onClick={handleClose}>
+              <MenuItem
+                component={Link}
+                to="/problem-timing-status"
+                onClick={handleClose}
+              >
                 Home
               </MenuItem>
-              <MenuItem component={Link} to="/playground" onClick={handleClose}>
+              <MenuItem
+                component={Link}
+                to="/problem-timing-status/playground"
+                onClick={handleClose}
+              >
                 Playground
               </MenuItem>
             </Menu>

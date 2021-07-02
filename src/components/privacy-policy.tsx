@@ -198,7 +198,11 @@ export default function PrivacyPolicy() {
         Persistent Cookies remain on Your personal computer or mobile device
         when You go offline, while Session Cookies are deleted as soon as You
         close Your web browser. You can learn more about cookies here:{' '}
-        <a href="https://www.termsfeed.com/blog/cookies/" target="_blank" rel="noreferrer">
+        <a
+          href="https://www.termsfeed.com/blog/cookies/"
+          target="_blank"
+          rel="noreferrer"
+        >
           All About Cookies by TermsFeed
         </a>
         .

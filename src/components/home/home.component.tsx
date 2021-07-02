@@ -86,10 +86,14 @@ export function Home() {
         </Typography>
         <br />
         <Typography align="center" variant="body2">
-          <Link to="/privacy-policy">Privacy Policy</Link>.
+          <Link to="/problem-timing-status/privacy-policy">Privacy Policy</Link>
+          .
         </Typography>
         <Typography align="center" variant="body2">
-          <Link to="/terms-and-conditions">Terms and Conditions</Link>.
+          <Link to="/problem-timing-status/terms-and-conditions">
+            Terms and Conditions
+          </Link>
+          .
         </Typography>
       </CardContent>
     </Card>
