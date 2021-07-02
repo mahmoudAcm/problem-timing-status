@@ -1,10 +1,12 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Container, Typography, useTheme } from '@material-ui/core';
 
-import { Context } from '../context';
 import { Header } from './header';
+import { Playground } from './playground';
 import { Home } from './home';
-import { About } from './about';
+import PrivacyPolicy from './privacy-policy';
+import TermsAndConditions from './terms-and-conditions';
 
 (function isScreenWidthMoreThan1079Pixels() {
   ['load', 'resize'].forEach((eventType) =>
@@ -19,16 +21,16 @@ import { About } from './about';
 
 export function App() {
   const theme = useTheme();
-  const {
-    state: {
-      HeaderReducer: { activeTab },
-    },
-  } = useContext(Context);
 
   return (
-    <>
+    <Router>
       <Header />
-      <Container>{activeTab === 0 ? <Home /> : <About />}</Container>
+      <Container>
+        <Route exact path="/" component={Home} />
+        <Route path="/playground" component={Playground} />
+        <Route path="/privacy-policy" component={PrivacyPolicy} />
+        <Route path="/terms-and-conditions" component={TermsAndConditions} />
+      </Container>
       <footer
         style={{
           marginTop: theme.spacing(6),
@@ -50,6 +52,6 @@ export function App() {
           </a>
         </Typography>
       </footer>
-    </>
+    </Router>
   );
 }
