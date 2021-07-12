@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import { Container, Typography, useTheme } from '@material-ui/core';
 
 import { Header } from './header';
@@ -26,19 +26,12 @@ export function App() {
     <Router>
       <Header />
       <Container>
-        <Route exact path="/problem-timing-status" component={Home} />
-        <Route
-          path="/problem-timing-status/playground"
-          component={Playground}
-        />
-        <Route
-          path="/problem-timing-status/privacy-policy"
-          component={PrivacyPolicy}
-        />
-        <Route
-          path="/problem-timing-status/terms-and-conditions"
-          component={TermsAndConditions}
-        />
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route path="/playground" component={Playground} />
+          <Route path="/privacy-policy" component={PrivacyPolicy} />
+          <Route path="/terms-and-conditions" component={TermsAndConditions} />
+        </Switch>
       </Container>
       <footer
         style={{

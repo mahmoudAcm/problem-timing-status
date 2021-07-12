@@ -75,14 +75,14 @@ export function Header() {
             >
               <MenuItem
                 component={Link}
-                to="/problem-timing-status"
+                to="/"
                 onClick={handleClose}
               >
                 Home
               </MenuItem>
               <MenuItem
                 component={Link}
-                to="/problem-timing-status/playground"
+                to="/playground"
                 onClick={handleClose}
               >
                 Playground
