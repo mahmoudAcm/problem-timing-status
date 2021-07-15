@@ -1,4 +1,4 @@
-import { loadData } from '../../common';
+import { loadData } from '../../../common';
 
 export function restoreSearch(dispatch: any) {
   return () => {

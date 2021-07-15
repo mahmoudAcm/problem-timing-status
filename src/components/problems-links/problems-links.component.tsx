@@ -1,22 +1,22 @@
 import React from 'react';
-import Grid from '@material-ui/core/Grid';
+import { Grid } from '@material-ui/core';
 
-import { useStyles } from './styles';
-import { Form } from './form.component';
+import { Form, Problems } from './components';
 
-export function ProblemsLinksList() {
-  const classes = useStyles();
-
+export function ProblemLinks() {
   return (
     <Grid
       container
+      spacing={4}
       direction="column"
       alignItems="center"
-      className={classes.problems}
-      spacing={1}
+      style={{ marginTop: 100 }}
     >
       <Grid item>
         <Form />
+      </Grid>
+      <Grid item>
+        <Problems />
       </Grid>
     </Grid>
   );

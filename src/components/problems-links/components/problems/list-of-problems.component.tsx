@@ -1,32 +1,56 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { useTheme, Grid } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
 import IconButton from '@material-ui/core/IconButton';
 import Pagination from '@material-ui/lab/Pagination';
-import FileCopyIcon from '@material-ui/icons/FileCopy';
-import DeleteIcon from '@material-ui/icons/Delete';
-import ReportIcon from '@material-ui/icons/Report';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 import copy from 'clipboard-copy';
 
 import { useStyles } from './styles';
-import { Context } from '../../context';
-import { saveData, loadData } from '../../common';
-import { PER_PAGE } from './const';
-import { AlertDialog } from '../summary';
+import { Context } from '../../../../context';
+import { saveData, loadData } from '../../../../common';
+import { PER_PAGE } from '../../common/const';
+import { AlertDialog } from '../../../summary';
+
+function ItemMenu(props: any) {
+  const open = Boolean(props.anchorEl);
+
+  return (
+    <Menu
+      anchorEl={props.anchorEl}
+      anchorOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      keepMounted
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      open={open}
+      onClose={props.handleClose}
+    >
+      {props.children}
+    </Menu>
+  );
+}
 
 export function ListOfProblems() {
-  const theme = useTheme();
   const classes = useStyles();
   const [page, setPage] = useState(1);
   const [open, setOpen] = useState(false);
   const [link, setLink] = useState('');
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [selectedLink, setSelectedLink] = useState('');
 
   const {
     state: {
@@ -46,12 +70,14 @@ export function ListOfProblems() {
 
   function handleCopy(link: string) {
     return () => {
+      closeItemMenu();
       copy(link);
     };
   }
 
   function handleDelete(link: string) {
     return () => {
+      closeItemMenu();
       if (code === link || !problemCodeList.length) {
         dispatch({
           type: 'SELECT_CODE',
@@ -129,15 +155,32 @@ export function ListOfProblems() {
 
   function handleDialog(link: string) {
     return () => {
+      closeItemMenu();
       setOpen(true);
       setLink(link);
     };
+  }
+
+  function handleItemMenu(link: string) {
+    return (event: React.MouseEvent<HTMLElement>) => {
+      setAnchorEl(event.currentTarget);
+      setSelectedLink(link);
+    };
+  }
+
+  function closeItemMenu() {
+    setAnchorEl(null);
   }
 
   return (
     <Grid container direction="column" alignItems="center">
       <Grid item>
         <AlertDialog open={open} setOpen={setOpen} link={link} />
+        <ItemMenu anchorEl={anchorEl} handleClose={closeItemMenu}>
+          <MenuItem onClick={handleCopy(selectedLink)}>Copy</MenuItem>
+          <MenuItem onClick={handleDialog(selectedLink)}>Summary</MenuItem>
+          <MenuItem onClick={handleDelete(selectedLink)}>Delete</MenuItem>
+        </ItemMenu>
         <List className={classes.root}>
           <RadioGroup name="code" value={code} onChange={handleSelect}>
             {!problemCodeList.length ? (
@@ -176,32 +219,11 @@ export function ListOfProblems() {
                       />
                       <ListItemSecondaryAction>
                         <IconButton
-                          aria-label="create"
-                          onClick={handleDialog(link)}
-                          title="create a summary"
-                          style={{
-                            color: theme.palette.info.main,
-                          }}
-                        >
-                          <ReportIcon />
-                        </IconButton>
-                        <IconButton
-                          aria-label="copy"
-                          onClick={handleCopy(link)}
-                          title="copy"
-                        >
-                          <FileCopyIcon />
-                        </IconButton>
-                        <IconButton
                           edge="end"
-                          aria-label="delete"
-                          onClick={handleDelete(link)}
-                          style={{
-                            color: theme.palette.error.main,
-                          }}
-                          title="delete"
+                          aria-label="menu"
+                          onClick={handleItemMenu(link)}
                         >
-                          <DeleteIcon />
+                          <MoreVertIcon />
                         </IconButton>
                       </ListItemSecondaryAction>
                     </ListItem>

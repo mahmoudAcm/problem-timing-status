@@ -7,8 +7,32 @@ import { useStyles } from './styles';
 import { Context } from '../../context';
 import { formatTime, saveData } from '../../common';
 
-export function Timer() {
+function UnitType(props: any) {
   const classes = useStyles();
+  return <div className={classes.unitType}>{props.children}</div>;
+}
+
+function Unit(props: any) {
+  const classes = useStyles();
+  return <div className={classes.unit}>{props.children}</div>;
+}
+
+function ToggleTimerButton(props: any) {
+  const classes = useStyles();
+  return (
+    <Button
+      variant="outlined"
+      color="primary"
+      className={classes.toggleTimerButton}
+      onClick={props.handleToggle}
+      id="timer-btn"
+    >
+      {props.isStarted ? <PauseIcon /> : <PlayArrowIcon />}
+    </Button>
+  );
+}
+
+export function Timer() {
   const {
     state: {
       StatusReducer: { status },
@@ -38,7 +62,7 @@ export function Timer() {
     };
   }, [isStarted, dispatch, interval]);
 
-  function handleClick() {
+  function handleToggle() {
     const startedAt = Date.now();
     if (!isStarted) {
       if (interval !== null) clearInterval(interval);
@@ -74,28 +98,20 @@ export function Timer() {
     <Grid container justify="center">
       <Grid item container justify="center">
         <Grid item>
-          <div className={classes.text}>Houres</div>
-          <div className={classes.unit}>{houres}</div>
+          <UnitType>Houres</UnitType>
+          <Unit>{houres}</Unit>
         </Grid>
         <Grid item>
-          <div className={classes.text}>Minutes</div>
-          <div className={classes.unit}>:{minutes}:</div>
+          <UnitType>Minutes</UnitType>
+          <Unit>:{minutes}:</Unit>
         </Grid>
         <Grid item>
-          <div className={classes.text}>Seconds</div>
-          <div className={classes.unit}>{seconds}</div>
+          <UnitType>Seconds</UnitType>
+          <Unit>{seconds}</Unit>
         </Grid>
       </Grid>
       <Grid item>
-        <Button
-          variant="outlined"
-          color="primary"
-          className={classes.btn}
-          onClick={handleClick}
-          id="timer-btn"
-        >
-          {isStarted ? <PauseIcon /> : <PlayArrowIcon />}
-        </Button>
+        <ToggleTimerButton isStarted={isStarted} handleToggle={handleToggle} />
       </Grid>
     </Grid>
   );

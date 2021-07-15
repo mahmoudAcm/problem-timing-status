@@ -2,7 +2,7 @@ import { Theme } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 const styles: any = (theme: Theme) => ({
-  text: {
+  unitType: {
     fontFamily: 'Qwigley',
     fontStyle: 'normal',
     fontSize: 16.043,
@@ -20,7 +20,7 @@ const styles: any = (theme: Theme) => ({
     textTransform: 'uppercase',
     color: '#000000',
   },
-  btn: {
+  toggleTimerButton: {
     width: 80.66,
     marginTop: -1 * theme.spacing(2),
   },

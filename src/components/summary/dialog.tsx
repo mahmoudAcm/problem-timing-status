@@ -20,10 +20,18 @@ export function AlertDialog(props: any) {
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
+        fullWidth
+        maxWidth="sm"
       >
         <DialogTitle id="alert-dialog-slide-title">
-          <Typography variant="body2" align="center" color="primary">
-            Summary of {link}
+          <Typography
+            variant="body2"
+            color="primary"
+            component="a"
+            href={link}
+            target="_blank"
+          >
+            {link}
           </Typography>
         </DialogTitle>
         <DialogContent>
