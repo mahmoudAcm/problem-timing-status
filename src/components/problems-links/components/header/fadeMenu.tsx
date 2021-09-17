@@ -3,10 +3,12 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Fade from '@material-ui/core/Fade';
 
+import { useStyles } from './styles';
 import { Context } from '../../../../context';
 import { saveData, loadData } from '../../../../common';
 
 export default function FadeMenu({ anchorEl, setAnchorEl }: any) {
+  const classes = useStyles();
   const {
     state: {
       SelectCodeReducer: { problemCodeList, code },
@@ -75,7 +77,9 @@ export default function FadeMenu({ anchorEl, setAnchorEl }: any) {
   return (
     <div>
       <Menu
-        id="fade-menu"
+        className={classes.fadeMenu}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
         anchorEl={anchorEl}
         keepMounted
         open={open}

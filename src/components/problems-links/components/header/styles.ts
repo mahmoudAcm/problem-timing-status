@@ -15,4 +15,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
       fontWeight: 'bold',
     },
   },
+  fadeMenu: {
+    marginTop: theme.spacing(6),
+  },
 }));

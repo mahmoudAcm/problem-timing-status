@@ -61,16 +61,10 @@ export function Header() {
             <Menu
               id="menu-appbar"
               className={classes.menu}
+              anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+              transformOrigin={{ vertical: 'top', horizontal: 'right' }}
               anchorEl={anchorEl}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
               keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
               open={open}
               onClose={handleClose}
             >
