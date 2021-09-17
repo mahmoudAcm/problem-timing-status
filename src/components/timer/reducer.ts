@@ -21,6 +21,7 @@ export function TimerReducer(
       return {
         ...state,
         timers,
+        initialTime: timers[status],
       };
     case 'SET_TIMER':
       return {

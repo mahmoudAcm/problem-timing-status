@@ -1,18 +1,26 @@
-import React, { useContext, useEffect } from 'react';
-import {
-  useTheme,
-  FormControl,
-  FormLabel,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
-} from '@material-ui/core';
+import React, { useContext, useEffect, createRef } from 'react';
+import { Grid } from '@material-ui/core';
 
+import { useStyles } from './styles';
 import { Context } from '../../context';
 import { saveData } from '../../common';
 
+const phases = ['reading', 'thinking', 'coding', 'debugging'];
+const refs = new Array(phases.length).fill(0).map(() => createRef<any>());
+
+function markSpan(status: string, classes: any) {
+  refs.forEach((ref) => {
+    ref.current.classList.remove(classes.statusMarked);
+  });
+
+  const index = phases.indexOf(status);
+  const statusRef = refs[index];
+  statusRef.current.classList.add(classes.statusMarked);
+}
+
 export function SelectStatus() {
-  const theme = useTheme();
+  const classes = useStyles();
+
   const {
     state: {
       StatusReducer: { status },
@@ -20,13 +28,16 @@ export function SelectStatus() {
     dispatch,
   } = useContext(Context);
 
-  function handleChange({ target }: React.ChangeEvent<{ value: string }>) {
-    const status = target.value;
-    dispatch({
-      type: 'STATUS_CHANAGE',
-      status,
-    });
-    saveData('status', status);
+  function handleChange(status: string) {
+    return () => {
+      dispatch({
+        type: 'STATUS_CHANAGE',
+        status,
+      });
+      saveData('status', status);
+
+      markSpan(status, classes);
+    };
   }
 
   useEffect(() => {
@@ -35,38 +46,28 @@ export function SelectStatus() {
         type: 'SET_TIMER',
         status,
       });
+
+      markSpan(status, classes);
     }
-  }, [status, dispatch]);
+  }, [status, dispatch, classes]);
 
   return (
-    <FormControl
-      component="fieldset"
-      style={{
-        marginLeft: theme.spacing(1),
-        marginTop: theme.spacing(2),
-        marginBottom: theme.spacing(1),
-      }}
-    >
-      <FormLabel component="legend">Status</FormLabel>
-      <RadioGroup
-        aria-label="status"
-        name="status"
-        value={status}
-        onChange={handleChange}
-      >
-        <FormControlLabel value="reading" control={<Radio />} label="Reading" />
-        <FormControlLabel
-          value="thinking"
-          control={<Radio />}
-          label="Thinking"
-        />
-        <FormControlLabel value="coding" control={<Radio />} label="Coding" />
-        <FormControlLabel
-          value="debugging"
-          control={<Radio />}
-          label="Debugging"
-        />
-      </RadioGroup>
-    </FormControl>
+    <Grid container justify="center" spacing={2}>
+      {phases.map((phase, idx) => (
+        <Grid
+          item
+          onClick={handleChange(phase)}
+          style={{
+            textTransform: 'capitalize',
+            cursor: 'pointer',
+          }}
+          key={phase}
+        >
+          <span ref={refs[idx]} className={classes.status}>
+            {phase}
+          </span>
+        </Grid>
+      ))}
+    </Grid>
   );
 }

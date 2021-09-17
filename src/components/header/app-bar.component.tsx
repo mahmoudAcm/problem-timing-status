@@ -22,6 +22,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     title: {
       flexGrow: 1,
+      fontFamily: 'Tangerine',
     },
   }),
 );
@@ -44,7 +45,7 @@ export function Header() {
     <div className={classes.root}>
       <AppBar position="fixed">
         <Toolbar>
-          <Typography variant="h6" className={classes.title}>
+          <Typography variant="h4" className={classes.title}>
             Problem Timing Status
           </Typography>
           <div>
@@ -73,18 +74,10 @@ export function Header() {
               open={open}
               onClose={handleClose}
             >
-              <MenuItem
-                component={Link}
-                to="/"
-                onClick={handleClose}
-              >
+              <MenuItem component={Link} to="/" onClick={handleClose}>
                 Home
               </MenuItem>
-              <MenuItem
-                component={Link}
-                to="/playground"
-                onClick={handleClose}
-              >
+              <MenuItem component={Link} to="/playground" onClick={handleClose}>
                 Playground
               </MenuItem>
             </Menu>

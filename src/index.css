@@ -32,3 +32,9 @@ body::-webkit-scrollbar {
   background: #b3d4fc;
   text-shadow: none;
 }
+
+.MuiInput-underline::before,
+.MuiInput-underline::after {
+  content: '' !important;
+  border: none !important;
+}

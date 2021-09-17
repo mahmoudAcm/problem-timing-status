@@ -1,16 +1,9 @@
 import React, { useContext, useState, useMemo, useEffect } from 'react';
 import { Button, Grid } from '@material-ui/core';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-import PauseIcon from '@material-ui/icons/Pause';
 
 import { useStyles } from './styles';
 import { Context } from '../../context';
 import { formatTime, saveData } from '../../common';
-
-function UnitType(props: any) {
-  const classes = useStyles();
-  return <div className={classes.unitType}>{props.children}</div>;
-}
 
 function Unit(props: any) {
   const classes = useStyles();
@@ -26,8 +19,9 @@ function ToggleTimerButton(props: any) {
       className={classes.toggleTimerButton}
       onClick={props.handleToggle}
       id="timer-btn"
+      disabled={!props.code}
     >
-      {props.isStarted ? <PauseIcon /> : <PlayArrowIcon />}
+      {!props.isStarted ? 'Start' : 'Stop'}
     </Button>
   );
 }
@@ -44,7 +38,9 @@ export function Timer() {
   const [interval, init] = useState<any>(null);
 
   const [houres, minutes, seconds] = useMemo(() => {
-    return formatTime(Math.round((initialTime + curTime) / 1000)).split(':');
+    return formatTime(Math.round((initialTime + curTime || 0) / 1000)).split(
+      ':',
+    );
   }, [initialTime, curTime]);
 
   useEffect(() => {
@@ -98,20 +94,21 @@ export function Timer() {
     <Grid container justify="center">
       <Grid item container justify="center">
         <Grid item>
-          <UnitType>Houres</UnitType>
           <Unit>{houres}</Unit>
         </Grid>
         <Grid item>
-          <UnitType>Minutes</UnitType>
           <Unit>:{minutes}:</Unit>
         </Grid>
         <Grid item>
-          <UnitType>Seconds</UnitType>
           <Unit>{seconds}</Unit>
         </Grid>
       </Grid>
       <Grid item>
-        <ToggleTimerButton isStarted={isStarted} handleToggle={handleToggle} />
+        <ToggleTimerButton
+          isStarted={isStarted}
+          handleToggle={handleToggle}
+          code={code}
+        />
       </Grid>
     </Grid>
   );

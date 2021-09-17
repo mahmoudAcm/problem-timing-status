@@ -1,28 +1,33 @@
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 
-export const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      width: 700,
-      minHeight: 300,
+export const useStyles = makeStyles((theme: Theme) => ({
+  cardClicked: { borderLeft: '4px solid black' },
+  marked: {
+    '& .checkIcon': {
+      color: theme.palette.error.light,
     },
-    problemsLinks: {
-      width: '100%',
-      marginTop: theme.spacing(1.5) + '%',
+
+    '& .content': {
+      textDecoration: 'line-through',
+      color: theme.palette.text.disabled,
     },
-    // addProblem: {
-    //   width: 440,
-    // },
-    // controllBtn: {
-    //   width: 75,
-    //   marginLeft: theme.spacing(1),
-    //   textTransform: 'capitalize',
-    // },
-    emptyListMsg: {
-      textTransform: 'capitalize',
-      marginTop: theme.spacing(14.5),
-      textAlign: 'center',
-      display: 'block',
+  },
+  problemCard: {
+    transition: '0.01s',
+    marginTop: theme.spacing(1),
+    cursor: 'pointer',
+    '& .content': {
+      display: 'flex',
+      alignItems: 'center',
+      '& .checkIcon': { fontSize: 28 },
+      '& .link': {
+        width: 400,
+        wordWrap: 'break-word',
+        flex: 1,
+        paddingRight: theme.spacing(4),
+        paddingLeft: 5,
+      },
+      '& .menu': { minWidth: theme.spacing(3), color: 'gray' },
     },
-  }),
-);
+  },
+}));

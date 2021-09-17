@@ -1,24 +1,43 @@
-import React, { useContext } from 'react';
-import { Grid } from '@material-ui/core';
+import React from 'react';
+import { Grid, Card, CardContent } from '@material-ui/core';
 
-import { Context } from '../../context';
 import { ProblemLinks } from '../problems-links';
-import { TimerDialog } from './';
+import { SelectStatus } from '../status';
+import { Timer } from '../timer';
+
+const row: any = () => ({
+  xs: 12,
+  sm: 12,
+  md: 12,
+  lg: 12,
+  xl: 12,
+});
 
 export function Playground() {
-  const {
-    state: {
-      SelectCodeReducer: { code },
-    },
-  } = useContext(Context);
-
   return (
-    <Grid container direction="column" alignItems="center" spacing={4}>
+    <Grid
+      container
+      direction="column"
+      alignItems="center"
+      spacing={4}
+      style={{ marginTop: 100 }}
+    >
       <Grid item>
-        <ProblemLinks />
+        <Card style={{ width: 600 }} elevation={3}>
+          <CardContent>
+            <Grid container justify="center" alignItems="center">
+              <Grid item {...row()}>
+                <SelectStatus />
+              </Grid>
+              <Grid item {...row()}>
+                <Timer />
+              </Grid>
+            </Grid>
+          </CardContent>
+        </Card>
       </Grid>
       <Grid item>
-        <TimerDialog open={!!code} code={code} />
+        <ProblemLinks />
       </Grid>
     </Grid>
   );

@@ -12,16 +12,12 @@ const styles: any = (theme: Theme) => ({
     marginBottom: -1 * theme.spacing(6),
   },
   unit: {
-    fontFamily: 'Reenie Beanie',
-    fontStyle: 'normal',
-    fontWeight: 500,
-    fontSize: 135.898,
-    textAlign: 'center',
-    textTransform: 'uppercase',
-    color: '#000000',
+    fontFamily: 'Varela Round',
+    fontSize: theme.spacing(9),
+    paddingBottom: theme.spacing(1),
   },
   toggleTimerButton: {
-    width: 80.66,
+    width: 120,
     marginTop: -1 * theme.spacing(2),
   },
 });
