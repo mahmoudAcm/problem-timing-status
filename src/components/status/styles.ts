@@ -6,7 +6,7 @@ const styles: any = (theme: Theme) => ({
     transition: '0.02s',
     padding: '3px 10px',
     borderRadius: 5,
-    '::selection': {
+    '&::selection': {
       background: 'none',
     },
   },

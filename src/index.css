@@ -18,19 +18,8 @@ code {
     monospace;
 }
 
-body::-webkit-scrollbar {
-  height: 5px;
-  width: 5px;
-}
-
-::-webkit-scrollbar-thumb {
-  /* border-radius: 5px; */
-  background-color: #607d8b;
-}
-
 ::selection {
-  background: #b3d4fc;
-  text-shadow: none;
+  background: #dbd198;
 }
 
 .MuiInput-underline::before,
