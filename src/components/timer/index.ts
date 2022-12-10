@@ -1,2 +1,1 @@
-export * from './timer.component';
-export * from './reducer';
+export { default } from "./timer";
