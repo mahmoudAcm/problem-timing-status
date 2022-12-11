@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { CssBaseline } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Backdrop from "@mui/material/Backdrop";
+import Fade from "@mui/material/Fade";
 
 //contexts
 import ThemeProvider from "@contexts/theme";
@@ -37,74 +38,88 @@ const ActiveProblem = () => {
   );
 };
 
-function getParsedData<T = any>(key: string, ifNoneValue: T) {
-  const JSON_DATA = localStorage.getItem(key)!;
-  if (!(typeof JSON_DATA === "undefined") && JSON_DATA !== "undefined")
-    return JSON.parse(JSON_DATA);
-  return ifNoneValue;
+function useGetParsedData<T = any>(key: string, ifNoneValue: T) {
+  const [data, setData] = useState<T>(ifNoneValue);
+
+  useEffect(() => {
+    const JSON_DATA = localStorage.getItem(key)!;
+    if (!(typeof JSON_DATA === "undefined") && JSON_DATA !== "undefined") {
+      setData(JSON.parse(JSON_DATA) ?? ifNoneValue);
+    }
+  }, []);
+
+  return data;
 }
 
 function App() {
   const [isPageLoding, setPageLoading] = useState(true);
 
   useEffect(() => {
-    document.fonts.ready.then(() => {
-      setPageLoading(false);
-      setTimeout(() => {
-        document.body.style.overflowY = "auto";
-      }, 1500);
-    });
+    window.onload = function () {
+      document.fonts.ready.then(() => {
+        setPageLoading(false);
+        setTimeout(() => {
+          document.body.style.overflowY = "auto";
+        }, 1500);
+      });
+    };
   }, []);
 
+  //@ts-ignore
+  const theme = mapThemeToIndex[useGetParsedData("activeStage", 0)];
+  const problems__db = useGetParsedData("problems", []);
+  const activeProblem__db = useGetParsedData("activeProblem", "");
+  const timers__db = useGetParsedData("timers", []);
+  const activeProblemId__db = useGetParsedData("activeProblemId", "");
+  const activeStage__db = useGetParsedData("activeStage", 0);
+  const startedAt__db = useGetParsedData("startedAt", -1);
+
   return (
-    <ThemeProvider
-      theme__db={
-        //@ts-ignore
-        mapThemeToIndex[getParsedData("activeStage", 0)]
-      }
-    >
-      <>
-        <CssBaseline />
-        <Backdrop
-          open={isPageLoding}
-          appear={false}
-          timeout={1000}
-          sx={{
-            zIndex: reading.zIndex.modal,
-            background: reading.palette.primary.main,
-          }}
-        >
-          <Typography color="white" variant="h4" fontWeight={500}>
-            Problem Timing Status...
-          </Typography>
-        </Backdrop>
-        {!isPageLoding ? (
-          <ProblemsProvider
-            problems__db={getParsedData("problems", [])}
-            activeProblem__db={getParsedData("activeProblem", "")}
-          >
-            <LinkerProvider
-              timers__db={getParsedData("timers", [])}
-              activeProblemId__db={getParsedData("activeProblemId", "")}
+    <>
+      <Backdrop
+        open={isPageLoding}
+        appear={false}
+        timeout={1000}
+        sx={{
+          zIndex: reading.zIndex.modal,
+          background: reading.palette.primary.main,
+        }}
+      >
+        <Typography color="white" variant="h4" fontWeight={700}>
+          Problem Timing Status...
+        </Typography>
+      </Backdrop>
+      {!isPageLoding ? (
+        <ThemeProvider theme__db={theme}>
+          <>
+            <CssBaseline />
+            <ProblemsProvider
+              problems__db={problems__db}
+              activeProblem__db={activeProblem__db}
             >
-              <TimerProvider
-                activeStage__db={getParsedData("activeStage", 0)}
-                startedAt__db={getParsedData("startedAt", -1)}
+              <LinkerProvider
+                timers__db={timers__db}
+                activeProblemId__db={activeProblemId__db}
               >
-                <MainLayout>
-                  <Header />
-                  <Timer />
-                  <ActiveProblem />
-                  <List />
-                </MainLayout>
-              </TimerProvider>
-            </LinkerProvider>
-          </ProblemsProvider>
-        ) : (
-          <></>
-        )}
-      </>
-    </ThemeProvider>
+                <TimerProvider
+                  activeStage__db={activeStage__db}
+                  startedAt__db={startedAt__db}
+                >
+                  <MainLayout>
+                    <Header />
+                    <Timer />
+                    <ActiveProblem />
+                    <List />
+                  </MainLayout>
+                </TimerProvider>
+              </LinkerProvider>
+            </ProblemsProvider>
+          </>
+        </ThemeProvider>
+      ) : (
+        <></>
+      )}
+    </>
   );
 }
 
