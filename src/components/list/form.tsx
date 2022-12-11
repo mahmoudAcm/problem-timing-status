@@ -115,7 +115,7 @@ function uesScrollResetAndAndingFocus(
 
     inputRef.current?.focus();
     window.scrollTo({
-      top: formRef.current?.offsetTop,
+      top: formRef.current?.offsetTop - formRef.current?.offsetHeight,
       behavior: "smooth",
     });
   }, [formRef, inputRef, isFormOpen]);

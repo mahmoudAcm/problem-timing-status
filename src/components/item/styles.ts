@@ -23,6 +23,7 @@ export const StyledItem = styled("div")(({ theme }) => ({
   },
   "& .link": {
     flex: 1,
+    wordBreak: "break-word",
   },
   [theme.breakpoints.down("sm")]: {
     "& .link": {
