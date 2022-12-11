@@ -1,25 +1,40 @@
-import { Theme } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { styled, alpha } from "@mui/material/styles";
 
-const styles: any = (theme: Theme) => ({
-  unitType: {
-    fontFamily: 'Qwigley',
-    fontStyle: 'normal',
-    fontSize: 16.043,
-    textAlign: 'center',
-    textTransform: 'uppercase',
-    color: '#000000',
-    marginBottom: -1 * theme.spacing(6),
+export const TimerWrapper = styled("div")(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  flexDirection: "column",
+  textAlign: "center",
+  width: "inherit",
+  minHeight: 300,
+  margin: "auto",
+  background:
+    theme.palette.mode == "dark"
+      ? "black"
+      : alpha(theme.palette.secondary.light, 0.5),
+  borderRadius: 5,
+  padding: "17px 80px",
+  [theme.breakpoints.down("sm")]: {
+    padding: "17px 10px !important",
   },
-  unit: {
-    fontFamily: 'Varela Round',
-    fontSize: theme.spacing(9),
-    paddingBottom: theme.spacing(1),
+  rowGap: "10px",
+  "& button": {
+    width: 200,
+    height: 55,
+    transition: "0.2s boxShadow",
+    fontWeight: 600,
+    fontSize: "22px",
+    boxShadow: "rgb(235 235 235) 0px 6px 0px",
+    "&:hover": {
+      boxShadow: "rgb(235 235 235) 0px 6px 0px",
+    },
+    "&:active, &.active": {
+      boxShadow: "none",
+      marginTop: "6px",
+    },
   },
-  toggleTimerButton: {
-    width: 120,
-    marginTop: -1 * theme.spacing(2),
-  },
-});
 
-export const useStyles = makeStyles(styles);
+  "& .display": {
+    fontSize: "120px",
+  },
+}));

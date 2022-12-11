@@ -1,2 +1,1 @@
-export * from './app-bar.component';
-export * from './reducer';
+export { default } from "./header";
