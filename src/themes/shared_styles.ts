@@ -4,7 +4,7 @@ export const MuiButton = {
     disableRipple: true,
   },
   styleOverrides: {
-    root: (prop) => {
+    root: (prop: any) => {
       const containedStyles = {
         backgroundColor: "white",
         color: prop.theme.palette.primary.main,
