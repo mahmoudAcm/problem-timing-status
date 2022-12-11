@@ -17,7 +17,7 @@ export default function About() {
         alignItems: "center",
         justifyContent: "center",
         "& .inner": {
-          maxWidth: 790,
+          maxWidth: 580,
           boxShadow: "none",
         },
       }}
