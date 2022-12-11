@@ -1,10 +1,11 @@
 import Box from "@mui/material/Box";
-import Container from "@mui/material/Container";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
+import { useTheme } from "@mui/material/styles";
 
 export default function About() {
+  const theme = useTheme();
   return (
     <Box
       sx={{
@@ -12,7 +13,7 @@ export default function About() {
         height: "fit-content",
         paddingTop: 5,
         paddingBottom: 5,
-        display: "flex",
+        display: theme.palette.mode == "dark" ? "none" : "flex",
         alignItems: "center",
         justifyContent: "center",
         "& .inner": {
@@ -57,7 +58,8 @@ export default function About() {
           </Typography>
           <br />
           <Typography align="center">
-            3.2.you can add, edit, mark as finshed and remove any problem from your problems list.
+            3.2.you can add, edit, mark as finshed and remove any problem from
+            your problems list.
           </Typography>
           <br />
           <Typography align="center">
