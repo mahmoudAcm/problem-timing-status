@@ -55,14 +55,18 @@ function App() {
   const [isPageLoding, setPageLoading] = useState(true);
 
   useEffect(() => {
-    window.onload = function () {
+    function onload() {
       document.fonts.ready.then(() => {
         setPageLoading(false);
         setTimeout(() => {
           document.body.style.overflowY = "auto";
         }, 1500);
       });
-    };
+    }
+    window.onload = onload;
+    if (document.readyState === "complete") {
+      onload();
+    }
   }, []);
 
   //@ts-ignore
@@ -85,7 +89,11 @@ function App() {
           background: reading.palette.primary.main,
         }}
       >
-        <Typography color="white" variant="h4" fontWeight={700}>
+        <Typography
+          color="white"
+          sx={{ fontSize: "clamp(14px, 7vw, 60px)" }}
+          fontWeight={700}
+        >
           Problem Timing Status...
         </Typography>
       </Backdrop>
