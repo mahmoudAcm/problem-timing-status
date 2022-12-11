@@ -17,6 +17,7 @@ import MainLayout from "@components/layouts/main";
 import Header from "@components/header";
 import Timer from "@components/timer";
 import List from "@components/list";
+import About from "@components/about";
 
 //themes
 import reading from "@themes/reading";
@@ -122,6 +123,7 @@ function App() {
                 </TimerProvider>
               </LinkerProvider>
             </ProblemsProvider>
+            <About />
           </>
         </ThemeProvider>
       ) : (
