@@ -24,6 +24,7 @@ import reading from "@themes/reading";
 
 //constants
 import { mapThemeToIndex } from "@components/stages";
+import { storage_version } from "@hooks/useLocalStorage";
 
 const ActiveProblem = () => {
   const { activeProblem } = useProblems();
@@ -43,7 +44,7 @@ function useGetParsedData<T = any>(key: string, ifNoneValue: T) {
   const [data, setData] = useState<T>(ifNoneValue);
 
   useEffect(() => {
-    const JSON_DATA = localStorage.getItem(key)!;
+    const JSON_DATA = localStorage.getItem(storage_version + key)!;
     if (!(typeof JSON_DATA === "undefined") && JSON_DATA !== "undefined") {
       setData(JSON.parse(JSON_DATA) ?? ifNoneValue);
     }
