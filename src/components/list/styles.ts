@@ -155,8 +155,8 @@ export const StyledFooter = styled("footer")(({ theme }) => ({
   columnGap: 15,
   fontSize: 25,
   "& .label": {
-    color: alpha("#fffff", 0.1),
-    marginRight: 4,
+    color: "rgba(255, 255, 255, 0.7)",
+    marginRight: 8,
     fontSize: "0.9rem",
   },
   "& .number": {

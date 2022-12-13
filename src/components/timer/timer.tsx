@@ -14,6 +14,9 @@ import { useProblems } from "@contexts/problems";
 //hooks
 import useLocalStorage from "@hooks/useLocalStorage";
 
+//helpers
+import formatSeconds from "@helpers/formatSeconds";
+
 export default function Timer() {
   const { setMode } = useTheme();
   const {
@@ -105,13 +108,4 @@ const useStartTimer = (
     __clearInterval();
     return () => __clearInterval();
   }, [startedAt, started]);
-};
-
-const formatSeconds = (sec: number) => {
-  const seconds = sec % 60;
-  const minutes = Math.floor(sec / 60);
-
-  const fill = (num: number) => (num < 10 ? "0" + num : num);
-
-  return fill(minutes) + ":" + fill(seconds);
 };

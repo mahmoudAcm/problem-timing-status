@@ -20,7 +20,8 @@
       "@components/*": ["components/*"],
       "@themes/*": ["themes/*"],
       "@contexts/*": ["contexts/*"],
-      "@hooks/*": ["hooks/*"]
+      "@hooks/*": ["hooks/*"],
+      "@helpers/*": ["helpers/*"]
     }
   },
   "include": ["src"],

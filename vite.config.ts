@@ -10,6 +10,7 @@ export default defineConfig({
       "@themes": path.resolve(__dirname, "src/themes"),
       "@contexts": path.resolve(__dirname, "src/contexts"),
       "@hooks": path.resolve(__dirname, "src/hooks"),
+      "@helpers": path.resolve(__dirname, "src/helpers"),
     },
   },
   plugins: [react()],
