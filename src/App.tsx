@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { CssBaseline } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Backdrop from "@mui/material/Backdrop";
-import Fade from "@mui/material/Fade";
+import Box from "@mui/material/Box";
 
 //contexts
 import ThemeProvider from "@contexts/theme";
@@ -26,15 +26,43 @@ import reading from "@themes/reading";
 import { mapThemeToIndex } from "@components/stages";
 import { storage_version } from "@hooks/useLocalStorage";
 
+const urlPattern =
+  /(?:https?):\/\/(\w+:?\w*)?(\S+)(:\d+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/g;
+
 const ActiveProblem = () => {
   const { activeProblem } = useProblems();
+  const id = new Date().toString();
+  const match = activeProblem.replace(
+    urlPattern,
+    (matched) => id + matched + id
+  );
+
   return (
     <div style={{ marginTop: -25 }}>
       <Typography align="center" color="#ccc">
         #
       </Typography>
       <Typography align="center" variant="body1" color="white">
-        {activeProblem}
+        {match.split(id).map((str, idx) => {
+          if (str.match(urlPattern))
+            return (
+              <Box
+                component="a"
+                key={id + idx}
+                href={str}
+                sx={{
+                  color: "white",
+                  "&:hover": {
+                    color: "white",
+                    textDecoration: "underline",
+                  },
+                }}
+              >
+                {str}
+              </Box>
+            );
+          return str;
+        })}
       </Typography>
     </div>
   );
