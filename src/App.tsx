@@ -57,6 +57,7 @@ const ActiveProblem = () => {
                     textDecoration: "underline",
                   },
                 }}
+                target="_blank"
               >
                 {str}
               </Box>
