@@ -1,9 +1,15 @@
-import { HTMLAttributes, useState, useId } from "react";
+import { HTMLAttributes, useState } from "react";
 import Typography from "@mui/material/Typography";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 //components
-import { StyledItem, CheckIcon, MenuButton } from "./styles";
+import {
+  ItemWrapper,
+  DropZone,
+  StyledItem,
+  CheckIcon,
+  MenuButton,
+} from "./styles";
 import Form from "@components/list/form";
 
 //conexts
@@ -17,11 +23,12 @@ interface ItemProps {
   checked?: boolean;
   onClick?: OnClickHandler;
   link: string;
+  order: number;
 }
 
 export default function Item(props: ItemProps) {
   const [isFormOpen, setFormOpening] = useState(false);
-  const { toggleFinshed } = useProblems();
+  const { toggleFinshed, reorderProblems } = useProblems();
 
   const toggleChecked: OnClickHandler = (evt) => {
     evt.stopPropagation();
@@ -42,20 +49,50 @@ export default function Item(props: ItemProps) {
       problemId={props.id}
     />
   ) : (
-    <StyledItem
-      className={props?.active ? "active" : undefined}
-      onClick={props.onClick}
-    >
-      <CheckIcon
-        onClick={toggleChecked}
-        className={props.checked ? "checked" : undefined}
+    <ItemWrapper>
+      <DropZone
+        data-order={props.order}
+        className="drop-zone"
+        onDrop={(evt) => {
+          evt.preventDefault();
+          reorderProblems(
+            Number(evt.dataTransfer.getData("text/plain")!),
+            Number(evt.currentTarget.dataset.order!)
+          );
+        }}
+        onDragOver={(evt) => {
+          evt.preventDefault();
+          evt.dataTransfer.dropEffect = "move";
+        }}
       />
-      <Typography fontWeight={500} className="link">
-        {props.link}
-      </Typography>
-      <MenuButton onClick={openMenu}>
-        <MoreVertIcon />
-      </MenuButton>
-    </StyledItem>
+      <StyledItem
+        data-order={props.order}
+        className={props?.active ? "active" : undefined}
+        onClick={props.onClick}
+        draggable={true}
+        onDragStart={(evt) => {
+          evt.currentTarget.classList.add("drag-start");
+          evt.dataTransfer.effectAllowed = "move";
+          evt.dataTransfer.setData(
+            "text/plain",
+            evt.currentTarget.dataset.order!
+          );
+        }}
+        onDragEnd={(evt) => {
+          evt.currentTarget.classList.remove("drag-start");
+        }}
+      >
+        <CheckIcon
+          onClick={toggleChecked}
+          className={props.checked ? "checked" : undefined}
+        />
+        <Typography fontWeight={500} className="link">
+          {props.link}
+        </Typography>
+        <MenuButton onClick={openMenu}>
+          <MoreVertIcon />
+        </MenuButton>
+      </StyledItem>
+    </ItemWrapper>
   );
 }

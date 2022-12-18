@@ -1,4 +1,4 @@
-import { useState, useId } from "react";
+import { useEffect, useState, useId } from "react";
 
 //components
 import Header from "./header";
@@ -32,9 +32,10 @@ export default function List() {
   return (
     <StyledList>
       <Header />
-      {problems.map((problem) => (
+      {problems.map((problem, idx) => (
         <Item
           id={problem.id}
+          order={idx}
           key={problem.id}
           onClick={onClick(problem.id)}
           active={problem.isActive}

@@ -1,4 +1,28 @@
+import Box from "@mui/material/Box";
 import { styled, alpha } from "@mui/material/styles";
+
+export const ItemWrapper = styled(Box)(() => ({
+  position: "relative",
+  width: "100%",
+  height: "fit-content",
+  overflow: "hidden",
+  "&:has(.drag-start)": {
+    "& .drop-zone": {
+      zIndex: 0,
+      opacity: 1,
+    },
+  },
+}));
+
+export const DropZone = styled(Box)(({ theme }) => ({
+  width: "100%",
+  background: theme.palette.primary.light,
+  position: "absolute",
+  inset: 0,
+  opacity: 0,
+  zIndex: -1,
+  borderRadius: 2,
+}));
 
 export const StyledItem = styled("div")(({ theme }) => ({
   width: "100%",
@@ -8,6 +32,7 @@ export const StyledItem = styled("div")(({ theme }) => ({
   padding: "10px 16px 10px 16px",
   userSelect: "none",
   boxShadow: "rgb(0 0 0 / 10%) 0px 4px 4px",
+  overflow: "hidden",
   cursor: "pointer",
   display: "flex",
   alignItems: "center",
@@ -24,6 +49,9 @@ export const StyledItem = styled("div")(({ theme }) => ({
   "& .link": {
     flex: 1,
     wordBreak: "break-word",
+  },
+  "&.drag-start": {
+    opacity: 0,
   },
   [theme.breakpoints.down("sm")]: {
     "& .link": {

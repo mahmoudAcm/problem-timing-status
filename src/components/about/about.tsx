@@ -58,7 +58,7 @@ export default function About() {
           </Typography>
           <br />
           <Typography align="center">
-            3.2.you can add, edit, mark as finshed and remove any problem from
+            3.2.you can add, edit, mark as finshed, remove and reorder any problem from
             your problems list.
           </Typography>
           <br />

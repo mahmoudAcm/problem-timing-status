@@ -28,6 +28,7 @@ const context = createContext({
   removeFinshedProblems: () => {},
   removeAllProblems: () => {},
   actions: [] as Action[],
+  reorderProblems: (op1: number, op2: number) => {},
 });
 
 export const useProblems = () => {
@@ -164,6 +165,35 @@ export default function ProblemsProvider({
     setProblems([]);
   };
 
+  const reorderProblems = (draggableOrder: number, dropZoneOrder: number) => {
+    console.log(
+      `drop zone: ${dropZoneOrder} --- draggable element:: ${draggableOrder}`
+    );
+
+    if (dropZoneOrder < draggableOrder) {
+      setProblems((problems) => {
+        const newProblems = [...problems];
+        let curIdx = draggableOrder;
+        console.log(problems);
+        while (curIdx > dropZoneOrder) {
+          swap(curIdx, curIdx - 1, newProblems);
+          curIdx--;
+        }
+        return newProblems;
+      });
+    } else {
+      setProblems((problems) => {
+        const newProblems = [...problems];
+        let curIdx = draggableOrder;
+        while (curIdx < dropZoneOrder) {
+          swap(curIdx, curIdx + 1, newProblems);
+          curIdx++;
+        }
+        return newProblems;
+      });
+    }
+  };
+
   return (
     <context.Provider
       value={{
@@ -178,9 +208,16 @@ export default function ProblemsProvider({
         markAsFinshed,
         removeFinshedProblems,
         removeAllProblems,
+        reorderProblems,
       }}
     >
       {children}
     </context.Provider>
   );
+}
+
+function swap(a: number, b: number, problems: Problem[]) {
+  const bVal = { ...problems[b] };
+  problems[b] = problems[a];
+  problems[a] = bVal;
 }

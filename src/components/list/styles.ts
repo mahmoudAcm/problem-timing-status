@@ -21,6 +21,11 @@ export const StyledList = styled("div")(() => ({
   flexDirection: "column",
   rowGap: "10px",
   paddingBottom: "30px",
+  "&:has(.drag-start)": {
+    "& .drop-zone": {
+      zIndex: 0,
+    },
+  },
 }));
 
 export const MenuButton = styled("div")(({ theme }) => ({
