@@ -1,4 +1,4 @@
-import { HTMLAttributes, useState } from "react";
+import { HTMLAttributes, useState, useRef, useCallback } from "react";
 import Typography from "@mui/material/Typography";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 
@@ -11,6 +11,8 @@ import {
   MenuButton,
 } from "./styles";
 import Form from "@components/list/form";
+//@ts-ignore
+import DragItem from "./dragItem";
 
 //conexts
 import { useProblems } from "@contexts/problems";
@@ -29,6 +31,8 @@ interface ItemProps {
 export default function Item(props: ItemProps) {
   const [isFormOpen, setFormOpening] = useState(false);
   const { toggleFinshed, reorderProblems } = useProblems();
+  const draggableEffectRef = useRef<any>();
+  const [dragStarted, setDragStarted] = useState(false);
 
   const toggleChecked: OnClickHandler = (evt) => {
     evt.stopPropagation();
@@ -40,6 +44,13 @@ export default function Item(props: ItemProps) {
     setFormOpening(true);
   };
 
+  const moveDraggabelItem = useCallback((x: number, y: number) => {
+    if (draggableEffectRef.current && x && y) {
+      draggableEffectRef.current.style.top = y + 5 + "px";
+      draggableEffectRef.current.style.left = x + "px";
+    }
+  }, []);
+
   return isFormOpen ? (
     <Form
       isFormOpen={isFormOpen}
@@ -50,6 +61,11 @@ export default function Item(props: ItemProps) {
     />
   ) : (
     <ItemWrapper>
+      <DragItem
+        {...props}
+        draggableEffectRef={draggableEffectRef}
+        dragStarted={dragStarted}
+      />
       <DropZone
         data-order={props.order}
         className="drop-zone"
@@ -77,9 +93,16 @@ export default function Item(props: ItemProps) {
             "text/plain",
             evt.currentTarget.dataset.order!
           );
+          setDragStarted(true);
+          document.body.style.overflowX = "hidden";
+        }}
+        onDrag={(evt) => {
+          moveDraggabelItem(evt.nativeEvent.pageX, evt.nativeEvent.pageY);
         }}
         onDragEnd={(evt) => {
           evt.currentTarget.classList.remove("drag-start");
+          setDragStarted(false);
+          document.body.style.overflowX = "auto";
         }}
       >
         <CheckIcon

@@ -53,6 +53,11 @@ export const StyledItem = styled("div")(({ theme }) => ({
   "&.drag-start": {
     opacity: 0,
   },
+  "&.dragItem": {
+    width: 490.38,
+    position: "absolute",
+    zIndex: theme.zIndex.appBar,
+  },
   [theme.breakpoints.down("sm")]: {
     "& .link": {
       width: "90%",
