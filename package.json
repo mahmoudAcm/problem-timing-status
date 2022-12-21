@@ -1,0 +1,14 @@
+{
+  "name": "problem-timing-status",
+  "version": "1.0.0",
+  "description": "",
+  "main": "deploy.js",
+  "devDependencies": {
+    "@mahmoudacm/copy": "git+https://github.com/mahmoudAcm/copy.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
