@@ -6,11 +6,7 @@ Problem timing status is a timer used for recording your timing preformance in a
 
 Your problems list are saved into your local machine and also all other data you see on this site. no external storage are used.
 
-  
-
-You can add, edit, mark as finshed and remove any problem from your problems list.
-
-  
+You can add, edit, mark as finshed, remove and reorder any problem from your problems list.
 
 The problem id is its link i.e https://codeforces.com/contest/1480/problem/B.
 
