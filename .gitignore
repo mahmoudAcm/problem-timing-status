@@ -25,3 +25,5 @@ yarn-error.log*
 
 # custome files
 deploy.js
+package.json
+package-lock.json
